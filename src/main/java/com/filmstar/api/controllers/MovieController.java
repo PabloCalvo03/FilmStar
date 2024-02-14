@@ -25,18 +25,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.filmstar.api.dtos.responses.MovieRatingResponse;
 import com.filmstar.api.entities.Movie;
 import com.filmstar.api.entities.Rating;
 import com.filmstar.api.entities.User;
 import com.filmstar.api.services.MovieService;
 
+/**
+ * Controlador que gestiona las operaciones relacionadas con peliculas.
+ */
 @RestController
 @RequestMapping("/api/v1/movies")
 public class MovieController {
 	
-	@Autowired
-	private MovieService movieService;
 	
+	private final MovieService movieService;
+	
+	public MovieController(MovieService movieService) {
+		this.movieService = movieService;
+	}
+	
+	/**
+     * Obtiene la lista de películas paginada y ordenada.
+     *
+     * @param page      Número de página.
+     * @param sortBy    Campo por el cual se ordenarán las películas.
+     * @param sortOrder Dirección de la ordenación (ascendente o descendente).
+     * @return Lista paginada y ordenada de películas.
+     */
 	@GetMapping
 	public ResponseEntity<List<Movie>> listMovies(
 			@RequestParam(required= false, defaultValue = "1") Integer page,
@@ -46,6 +62,12 @@ public class MovieController {
 		return new ResponseEntity<List<Movie>>(movieService.findAll(pageable), HttpStatus.ACCEPTED);
 	}
 	
+	/**
+     * Obtiene una película por su ID.
+     *
+     * @param id ID de la película.
+     * @return Película encontrada o mensaje de error si no se encuentra.
+     */
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findMovie(@PathVariable Integer id){
 		try {
@@ -55,6 +77,13 @@ public class MovieController {
 		}
 	}
 
+	/**
+     * Crea una nueva película.
+     *
+     * @param movie          Datos de la película a crear.
+     * @param bindingResult  Resultados de la validación.
+     * @return Película creada o mensajes de error si la validación falla.
+     */
 	@PostMapping
 	public ResponseEntity<?> createMovie(@Valid @RequestBody Movie movie, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
@@ -68,6 +97,14 @@ public class MovieController {
         return new ResponseEntity<>(movieService.save(movie), HttpStatus.CREATED);
     }
 
+	/**
+	 * Actualiza los detalles de una película existente.
+	 *
+	 * @param id            ID de la película a actualizar.
+	 * @param updatedMovie  Datos actualizados de la película.
+	 * @param bindingResult Resultados de la validación.
+	 * @return Película actualizada o mensajes de error si la validación falla o no se encuentra la película.
+	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateMovie(@PathVariable Integer id, @Valid @RequestBody Movie updatedMovie, BindingResult bindingResult) {
 		
@@ -95,18 +132,32 @@ public class MovieController {
 		}
 	}
 	
+	/**
+	 * Elimina una película por su ID.
+	 *
+	 * @param id ID de la película a eliminar.
+	 * @return Respuesta vacía con estado de aceptación o mensaje de error si no se encuentra la película.
+	 */
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteMovie(@PathVariable Integer id){
-		try {
-			Movie movie = movieService.findById(id);
-			return new ResponseEntity<String>(HttpStatus.ACCEPTED);
-			
-		} catch(NoSuchElementException e) {
-			return new ResponseEntity<Map<String, String>>(Map.of("error", "No se ha encontrado la pelicula."), HttpStatus.NOT_FOUND);
-		}
-		
+	public ResponseEntity<?> deleteMovie(@PathVariable Integer id) {
+	    try {
+	        Movie movie = movieService.findById(id);
+	        movieService.deleteById(id);  
+	        return new ResponseEntity<String>(HttpStatus.ACCEPTED);
+
+	    } catch (NoSuchElementException e) {
+	        return new ResponseEntity<Map<String, String>>(Map.of("error", "No se ha encontrado la película."), HttpStatus.NOT_FOUND);
+	    }
 	}
 	
+	/**
+	 * Realiza una calificación para una película.
+	 *
+	 * @param id    ID de la película a calificar.
+	 * @param score Puntuación de la calificación.
+	 * @param user  Usuario autenticado que realiza la calificación.
+	 * @return Calificación creada o mensaje de error si no se encuentra la película o el usuario no está autenticado.
+	 */
 	@PostMapping("/{id}/rate")
     public ResponseEntity<?> rateMovie(
             @PathVariable Integer id,
@@ -115,12 +166,12 @@ public class MovieController {
         
         try {
             if (user == null) {
-                return new ResponseEntity<>(Map.of("error", "User not authenticated"), HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>(Map.of("error", "Usuario no autenticado."), HttpStatus.UNAUTHORIZED);
             }
 
-            // userDetails.getUsername() will give you the username of the authenticated user
             Rating rating = movieService.rateMovie(id, score, user);
-            return new ResponseEntity<>(rating, HttpStatus.CREATED);
+            MovieRatingResponse ratingResponse = new MovieRatingResponse(rating);
+            return new ResponseEntity<>(ratingResponse, HttpStatus.CREATED);
 
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(Map.of("error", "No se ha encontrado la pelicula."), HttpStatus.NOT_FOUND);

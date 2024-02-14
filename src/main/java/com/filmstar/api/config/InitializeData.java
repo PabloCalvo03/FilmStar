@@ -15,8 +15,10 @@ import com.filmstar.api.repositories.UserRepository;
 @Component
 public class InitializeData implements CommandLineRunner {
 	
-	// Para cargar las peliculas poner esto en false
+	// Para borrar las peliculas poner esto en true
 	final Boolean borrarPeliculas = false;
+	
+	// Para borrar los ratings poner eesto en true
 	final Boolean borrarRatings = true;
 
     @Autowired

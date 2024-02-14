@@ -1,5 +1,5 @@
+DELETE FROM favorites;
 DELETE FROM ratings;
-DELETE FROM movies;
 DELETE FROM user_rol;
 DELETE FROM users;
 

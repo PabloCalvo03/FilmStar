@@ -13,16 +13,13 @@ import com.filmstar.api.entities.Rating;
 import com.filmstar.api.entities.User;
 import com.filmstar.api.repositories.MovieRepository;
 import com.filmstar.api.repositories.RatingRepository;
-import com.filmstar.api.repositories.UserRepository;
 
 @Service
 public class MovieServiceImpl implements MovieService{
 	
 	@Autowired
 	private MovieRepository movieRepository;
-	
-	@Autowired 
-	private UserRepository userRepository;
+
 	
 	@Autowired
 	private RatingRepository ratingRepository;

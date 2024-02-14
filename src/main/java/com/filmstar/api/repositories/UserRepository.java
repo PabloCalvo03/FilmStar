@@ -7,9 +7,13 @@ import org.springframework.stereotype.Repository;
 
 import com.filmstar.api.entities.User;
 
+/**
+ * Repositorio de usuarios del sistema.
+ * @author pablo
+ *
+ */
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    // Since email is unique, we'll find users by email
     Optional<User> findByEmail(String email);
     Boolean existsByEmail(String email);
 }

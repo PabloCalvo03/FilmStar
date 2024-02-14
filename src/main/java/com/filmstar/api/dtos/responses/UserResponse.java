@@ -1,5 +1,7 @@
 package com.filmstar.api.dtos.responses;
 
+import com.filmstar.api.entities.User;
+
 public class UserResponse {
 	
  	private String firstName;
@@ -17,6 +19,7 @@ public class UserResponse {
 		this.email = email;
 		this.rol = rol;
 	}
+
 	public String getFirstName() {
 		return firstName;
 	}

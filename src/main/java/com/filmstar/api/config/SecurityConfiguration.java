@@ -30,14 +30,22 @@ public class SecurityConfiguration {
     JwtAuthenticationFilter jwtAuthenticationFilter;
 	@Autowired
     UserService userService;
-    
+   
+	
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     	http
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(request -> request
             .antMatchers("/api/v1/auth/**").permitAll()
-            .antMatchers("/api/v1/movies/**").hasAnyAuthority(Role.ROLE_USER.toString(), Role.ROLE_ADMIN.toString()) 
+            .antMatchers(HttpMethod.GET, "/api/v1/favorites/**").hasAuthority(Role.ROLE_USER.toString()) 
+            .antMatchers(HttpMethod.POST, "/api/v1/favorites/**").hasAuthority(Role.ROLE_USER.toString())
+            .antMatchers(HttpMethod.DELETE, "/api/v1/favorites/**").hasAuthority(Role.ROLE_USER.toString())
+            .antMatchers(HttpMethod.GET, "/api/v1/movies/**").hasAuthority(Role.ROLE_USER.toString()) 
+            .antMatchers(HttpMethod.POST, "/api/v1/movies/{id}/rate").hasAuthority(Role.ROLE_USER.toString()) 
+            .antMatchers(HttpMethod.POST, "/api/v1/movies").hasAuthority(Role.ROLE_ADMIN.toString()) 
+            .antMatchers(HttpMethod.PUT, "/api/v1/movies/**").hasAuthority(Role.ROLE_ADMIN.toString())  
+            .antMatchers(HttpMethod.DELETE, "/api/v1/movies/**").hasAuthority(Role.ROLE_ADMIN.toString()) 
             .anyRequest().authenticated())
         .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authenticationProvider(authenticationProvider())
