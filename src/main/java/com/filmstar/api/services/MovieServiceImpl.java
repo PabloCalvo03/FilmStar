@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.filmstar.api.entities.Movie;
 import com.filmstar.api.entities.Rating;
 import com.filmstar.api.entities.User;
+import com.filmstar.api.exceptions.MovieNotFoundException;
 import com.filmstar.api.repositories.MovieRepository;
 import com.filmstar.api.repositories.RatingRepository;
 
@@ -32,7 +33,7 @@ public class MovieServiceImpl implements MovieService{
 	@Override
 	public Movie findById(Integer id) throws NoSuchElementException{
 		Optional<Movie> optionalMovie = movieRepository.findById(id);
-	    return optionalMovie.orElseThrow(() -> new NoSuchElementException("Movie not found with id: " + id));
+	    return optionalMovie.orElseThrow(() -> new MovieNotFoundException("Movie not found with id: " + id));
 	}
 
 	@Override

@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -29,6 +28,7 @@ import com.filmstar.api.dtos.responses.MovieRatingResponse;
 import com.filmstar.api.entities.Movie;
 import com.filmstar.api.entities.Rating;
 import com.filmstar.api.entities.User;
+import com.filmstar.api.exceptions.MovieNotFoundException;
 import com.filmstar.api.services.MovieService;
 
 /**
@@ -37,7 +37,6 @@ import com.filmstar.api.services.MovieService;
 @RestController
 @RequestMapping("/api/v1/movies")
 public class MovieController {
-	
 	
 	private final MovieService movieService;
 	
@@ -72,8 +71,8 @@ public class MovieController {
 	public ResponseEntity<?> findMovie(@PathVariable Integer id){
 		try {
 			return new ResponseEntity<Movie>(movieService.findById(id), HttpStatus.ACCEPTED);
-		} catch(NoSuchElementException e) {
-			return new ResponseEntity<Map<String, String>>(Map.of("error", "No se ha encontrado la pelicula."), HttpStatus.NOT_FOUND);
+		} catch(MovieNotFoundException e) {
+			throw e;
 		}
 	}
 
@@ -127,8 +126,8 @@ public class MovieController {
 
 	        return new ResponseEntity<>(movieService.save(existingMovie), HttpStatus.OK);
 	    
-		} catch(NoSuchElementException e) {
-			return new ResponseEntity<Map<String, String>>(Map.of("error", "No se ha encontrado la pelicula."), HttpStatus.NOT_FOUND);
+		} catch(MovieNotFoundException e) {
+			throw e;
 		}
 	}
 	
@@ -145,8 +144,8 @@ public class MovieController {
 	        movieService.deleteById(id);  
 	        return new ResponseEntity<String>(HttpStatus.ACCEPTED);
 
-	    } catch (NoSuchElementException e) {
-	        return new ResponseEntity<Map<String, String>>(Map.of("error", "No se ha encontrado la película."), HttpStatus.NOT_FOUND);
+	    } catch (MovieNotFoundException e) {
+	        throw e;
 	    }
 	}
 	
@@ -173,8 +172,8 @@ public class MovieController {
             MovieRatingResponse ratingResponse = new MovieRatingResponse(rating);
             return new ResponseEntity<>(ratingResponse, HttpStatus.CREATED);
 
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(Map.of("error", "No se ha encontrado la pelicula."), HttpStatus.NOT_FOUND);
+        } catch (MovieNotFoundException e) {
+            throw e;
         }
     }
 }
