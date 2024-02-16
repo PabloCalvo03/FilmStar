@@ -6,7 +6,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +20,7 @@ import com.filmstar.api.dtos.responses.MovieFavoriteResponse;
 import com.filmstar.api.entities.FavoriteMovie;
 import com.filmstar.api.entities.Movie;
 import com.filmstar.api.entities.User;
+import com.filmstar.api.exceptions.MovieNotFoundException;
 import com.filmstar.api.services.FavoriteMovieService;
 import com.filmstar.api.services.MovieService;
 
@@ -32,7 +32,6 @@ import com.filmstar.api.services.MovieService;
 public class FavoriteMovieController {
 
     private final FavoriteMovieService favoriteMovieService;
-    
     private final MovieService movieService;
 
     public FavoriteMovieController(MovieService movieService, FavoriteMovieService favoriteMovieService) {
@@ -75,8 +74,8 @@ public class FavoriteMovieController {
 	        }
 	        favoriteMovieService.addFavoriteMovie(user, movie);
 	        return new ResponseEntity<Map<String, String>>(Map.of("message", "Pelicula añadida a favoritos."), HttpStatus.CREATED);
-		} catch(NoSuchElementException e) {
-			return new ResponseEntity<Map<String, String>>(Map.of("error", "No se ha encontrado la pelicula."), HttpStatus.NOT_FOUND);
+		} catch(MovieNotFoundException e) {
+			throw e;
 		}
     }
 
@@ -98,8 +97,8 @@ public class FavoriteMovieController {
 		        return new ResponseEntity<Map<String, String>>(Map.of("message", "La pelicula ya estaba borrada de favoritas o nunca estuvo en favoritos"), HttpStatus.OK);
 	        }
 	        return new ResponseEntity<Map<String, String>>(Map.of("message", "Pelicula borrada de favoritos."), HttpStatus.OK);
-	    } catch(NoSuchElementException e) {
-			return new ResponseEntity<Map<String, String>>(Map.of("error", "No se ha encontrado la pelicula."), HttpStatus.NOT_FOUND);
-		}
+	    } catch(MovieNotFoundException e) {
+	    	throw e;
+	    }
     }
 }

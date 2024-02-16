@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorDetails> handleNoHandlerFoundException(NoHandlerFoundException ex, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(
             new Date(),
-            "Ruta no encontrada",
+            "URL not found",
             ex.getRequestURL());
 
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
@@ -51,8 +51,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
     
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorDetails> handleGlobalException(Exception ex, WebRequest request) {
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity<ErrorDetails> handleGlobalException(Throwable ex, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(
             new Date(),
             "Error interno del servidor",

@@ -21,8 +21,6 @@ import com.filmstar.api.config.jwt.JwtAuthenticationFilter;
 import com.filmstar.api.entities.Role;
 import com.filmstar.api.services.UserService;
 
-import lombok.RequiredArgsConstructor;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
