@@ -51,8 +51,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
     
-    @ExceptionHandler(Throwable.class)
-    public ResponseEntity<ErrorDetails> handleGlobalException(Throwable ex, WebRequest request) {
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDetails> handleGlobalException(Exception ex, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(
             new Date(),
             "Error interno del servidor",
