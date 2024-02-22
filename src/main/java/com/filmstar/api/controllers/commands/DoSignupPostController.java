@@ -1,4 +1,4 @@
-package com.filmstar.api.controllers;
+package com.filmstar.api.controllers.commands;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

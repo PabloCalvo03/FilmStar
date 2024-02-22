@@ -1,4 +1,4 @@
-package com.filmstar.api.controllers;
+package com.filmstar.api.controllers.querys;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

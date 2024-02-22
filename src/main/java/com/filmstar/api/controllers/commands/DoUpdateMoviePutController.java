@@ -1,4 +1,4 @@
-package com.filmstar.api.controllers;
+package com.filmstar.api.controllers.commands;
 
 import java.util.List;
 import java.util.Map;
