@@ -37,21 +37,21 @@ public class InitializeData implements CommandLineRunner {
     	if(borrarRatings) ratingRepository.deleteAll();
     	try {
     		
-            User User1 = new User();
-            User1.setFirstname("Alice");
-            User1.setLastname("Johnson");
-            User1.setEmail("alice.johnson@example.com");
-            User1.setPassword(passwordEncoder.encode("password123"));
-            User1.getRoles().add(Role.ROLE_USER);
-            userRepository.save(User1);
+            User user = new User();
+            user.setFirstname("Alice");
+            user.setLastname("Johnson");
+            user.setEmail("alice.johnson@example.com");
+            user.setPassword(passwordEncoder.encode("password123"));
+            user.getRoles().add(Role.ROLE_USER);
+            userRepository.save(user);
             
-            User User2 = new User();
-            User2.setFirstname("Bob");
-            User2.setLastname("Smith");
-            User2.setEmail("bob.smith@example.com");
-            User2.setPassword(passwordEncoder.encode("password456"));
-            User2.getRoles().add(Role.ROLE_ADMIN);
-            userRepository.save(User2);
+            User admin = new User();
+            admin.setFirstname("Bob");
+            admin.setLastname("Smith");
+            admin.setEmail("bob.smith@example.com");
+            admin.setPassword(passwordEncoder.encode("password456"));
+            admin.getRoles().add(Role.ROLE_ADMIN);
+            userRepository.save(admin);
             
             
     	}catch(Exception e) {

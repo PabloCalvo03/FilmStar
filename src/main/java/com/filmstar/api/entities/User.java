@@ -62,8 +62,7 @@ public class User implements UserDetails {
     @Transactional
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Cargar la colección de roles de manera temprana
-        roles.size(); // Esto carga la colección de roles
+        roles.size();
 
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.name()))
@@ -157,7 +156,6 @@ public class User implements UserDetails {
         private Set<Role> roles = new HashSet<>();
 
         private UserBuilder() {
-            // Constructor privado para limitar la instanciación directa
         }
 
         public UserBuilder id(Integer id) {

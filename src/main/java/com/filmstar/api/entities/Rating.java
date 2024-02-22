@@ -23,7 +23,7 @@ public class Rating {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user; // Assume you have a User entity representing users
+    private User user;
 
     @Column(name = "score", nullable = false)
     private int score;
