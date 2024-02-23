@@ -32,9 +32,7 @@ public class FavoriteMovieServiceImpl implements FavoriteMovieService {
 
     public Optional<FavoriteMovie> removeFavoriteMovie(User user, Movie movie) {
         Optional<FavoriteMovie> favoriteMovie = favoriteMovieRepository.findByUserAndMovie(user, movie);
-
         favoriteMovie.ifPresent(favoriteMovieRepository::delete);
-
         return favoriteMovie;
     }
 

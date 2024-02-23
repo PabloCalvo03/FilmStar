@@ -1,5 +1,8 @@
 package com.filmstar.api.exceptions;
 import java.util.Date;
+import java.util.Map;
+
+import javax.naming.AuthenticationException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +22,11 @@ public class GlobalExceptionHandler {
             ex.getMessage(),
             request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+	
+	@ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Object> handleAuthenticationException(AuthenticationException ex) {
+        return new ResponseEntity<>(Map.of("error", "Usuario no autenticado."), HttpStatus.UNAUTHORIZED);
     }
     
     
@@ -59,4 +67,5 @@ public class GlobalExceptionHandler {
             request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    
 }

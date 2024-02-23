@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,6 @@ import com.filmstar.api.dtos.responses.JwtAuthenticationResponse;
 import com.filmstar.api.entities.Role;
 import com.filmstar.api.entities.User;
 import com.filmstar.api.repositories.UserRepository;
-
-import lombok.Builder;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -63,4 +62,5 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String jwt = jwtService.generateToken(user);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
+
 }
