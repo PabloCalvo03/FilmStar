@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.filmstar.api.entities.Movie;
 import com.filmstar.api.exceptions.MovieNotFoundException;
 import com.filmstar.api.services.MovieService;
+import com.filmstar.api.util.EntityValidator;
 
 @RestController
 @RequestMapping("/api/v1/movies/{id}")
@@ -40,14 +41,8 @@ public class DoUpdateMoviePutController {
 	@PutMapping
 	public ResponseEntity<?> execute(@PathVariable Integer id, @Valid @RequestBody Movie updatedMovie, BindingResult bindingResult) {
 		
-		if (bindingResult.hasErrors()) {
-            List<String> errors = bindingResult.getFieldErrors()
-                    .stream()
-                    .map(err -> err.getDefaultMessage())
-                    .collect(Collectors.toList());
+		if (bindingResult.hasErrors()) EntityValidator.validate(bindingResult);
 
-            return new ResponseEntity<>(Map.of("errors", errors), HttpStatus.BAD_REQUEST);
-        }
 		try {
 			Movie existingMovie = movieService.findById(id);
 

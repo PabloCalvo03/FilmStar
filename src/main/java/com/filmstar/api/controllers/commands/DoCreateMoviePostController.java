@@ -1,9 +1,5 @@
 package com.filmstar.api.controllers.commands;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -16,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.filmstar.api.entities.Movie;
 import com.filmstar.api.services.MovieService;
+import com.filmstar.api.util.EntityValidator;
 
 @RestController
 @RequestMapping("/api/v1/movies")
@@ -37,14 +34,7 @@ public class DoCreateMoviePostController {
      */
 	@PostMapping
 	public ResponseEntity<?> execute(@Valid @RequestBody Movie movie, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-            List<String> errors = bindingResult.getFieldErrors()
-                    .stream()
-                    .map(err -> err.getDefaultMessage())
-                    .collect(Collectors.toList());
-
-            return new ResponseEntity<>(Map.of("errors", errors), HttpStatus.BAD_REQUEST);
-        }
+		if (bindingResult.hasErrors()) EntityValidator.validate(bindingResult);
         return new ResponseEntity<>(movieService.save(movie), HttpStatus.CREATED);
     }
 	
