@@ -34,7 +34,10 @@ public class DoCreateMoviePostController {
      */
 	@PostMapping
 	public ResponseEntity<?> execute(@Valid @RequestBody Movie movie, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) EntityValidator.validate(bindingResult);
+		if (bindingResult.hasErrors()) {
+			return new ResponseEntity<>(EntityValidator.execute(bindingResult), HttpStatus.BAD_REQUEST);
+		}
+		
         return new ResponseEntity<>(movieService.save(movie), HttpStatus.CREATED);
     }
 	

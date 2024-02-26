@@ -41,7 +41,9 @@ public class DoUpdateMoviePutController {
 	@PutMapping
 	public ResponseEntity<?> execute(@PathVariable Integer id, @Valid @RequestBody Movie updatedMovie, BindingResult bindingResult) {
 		
-		if (bindingResult.hasErrors()) EntityValidator.validate(bindingResult);
+		if (bindingResult.hasErrors()) {
+			return new ResponseEntity<>(EntityValidator.execute(bindingResult), HttpStatus.BAD_REQUEST);
+		}
 
 		try {
 			Movie existingMovie = movieService.findById(id);
