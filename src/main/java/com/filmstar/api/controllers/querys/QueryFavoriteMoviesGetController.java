@@ -36,7 +36,7 @@ public class QueryFavoriteMoviesGetController {
      * @return ResponseEntity con la lista de respuestas MovieFavoriteResponse y HttpStatus OK
      */
     @GetMapping
-    public ResponseEntity<List<MovieFavoriteResponse>> getFavorites(@AuthenticationPrincipal User user) {
+    public ResponseEntity<List<MovieFavoriteResponse>> execute(@AuthenticationPrincipal User user) {
     	List<FavoriteMovie> favorites = favoriteMovieService.getFavoritesByUser(user);
         List<MovieFavoriteResponse> responseList = favorites.stream()
                 .map(MovieFavoriteResponse::new)

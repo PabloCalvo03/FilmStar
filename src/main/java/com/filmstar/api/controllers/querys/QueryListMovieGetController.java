@@ -37,7 +37,7 @@ private final MovieService movieService;
      * @return Lista paginada y ordenada de películas.
      */
 	@GetMapping
-	public ResponseEntity<List<Movie>> listMovies(
+	public ResponseEntity<List<Movie>> execute(
 			@RequestParam(required= false, defaultValue = "1") Integer page,
 			@RequestParam(required = false, defaultValue= "title") String sortBy,
 			@RequestParam(required = false, defaultValue="asc") String sortOrder){

@@ -40,7 +40,7 @@ public class DoDeleteFavoriteMovieDeleteController {
      * @return ResponseEntity con el mensaje y HttpStatus correspondientes
      */
     @DeleteMapping
-    public ResponseEntity<?> removeFavorite(
+    public ResponseEntity<?> execute(
             @PathVariable Integer movieId,
             @AuthenticationPrincipal User user) {
     	try {

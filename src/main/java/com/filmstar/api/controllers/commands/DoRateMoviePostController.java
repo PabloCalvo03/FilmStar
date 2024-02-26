@@ -36,7 +36,7 @@ public class DoRateMoviePostController {
 	 * @return Calificación creada o mensaje de error si no se encuentra la película o el usuario no está autenticado.
 	 */
 	@PostMapping
-	public ResponseEntity<?> rateMovie(
+	public ResponseEntity<?> execute(
 	        @RequestBody MovieRatingRequest requestBody,
 	        @AuthenticationPrincipal User user) {
 

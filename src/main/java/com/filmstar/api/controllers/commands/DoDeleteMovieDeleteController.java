@@ -28,7 +28,7 @@ public class DoDeleteMovieDeleteController {
 	 * @return Respuesta vacía con estado de aceptación o mensaje de error si no se encuentra la película.
 	 */
 	@DeleteMapping
-	public ResponseEntity<?> deleteMovie(@PathVariable Integer id) {
+	public ResponseEntity<?> execute(@PathVariable Integer id) {
 	    try {
 	        Movie movie = movieService.findById(id);
 	        movieService.deleteById(id);  

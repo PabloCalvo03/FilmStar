@@ -36,7 +36,7 @@ public class DoCreateMoviePostController {
      * @return Película creada o mensajes de error si la validación falla.
      */
 	@PostMapping
-	public ResponseEntity<?> createMovie(@Valid @RequestBody Movie movie, BindingResult bindingResult) {
+	public ResponseEntity<?> execute(@Valid @RequestBody Movie movie, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult.getFieldErrors()
                     .stream()

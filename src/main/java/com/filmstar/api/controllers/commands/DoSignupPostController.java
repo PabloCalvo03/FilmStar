@@ -30,7 +30,7 @@ public class DoSignupPostController {
      * @return Respuesta con token JWT y detalles del usuario recién registrado.
      */
     @PostMapping
-    public ResponseEntity<JwtAuthenticationResponse> signup(@RequestBody SignUpRequest request) {
+    public ResponseEntity<JwtAuthenticationResponse> execute(@RequestBody SignUpRequest request) {
         return ResponseEntity.ok(authenticationService.signup(request));
     }
 

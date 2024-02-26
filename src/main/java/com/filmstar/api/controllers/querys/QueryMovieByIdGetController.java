@@ -31,7 +31,7 @@ private final MovieService movieService;
      * @return Película encontrada o mensaje de error si no se encuentra.
      */
 	@GetMapping
-	public ResponseEntity<?> findMovie(@PathVariable Integer id){
+	public ResponseEntity<?> execute(@PathVariable Integer id){
 		try {
 			return new ResponseEntity<Movie>(movieService.findById(id), HttpStatus.ACCEPTED);
 		} catch(MovieNotFoundException e) {

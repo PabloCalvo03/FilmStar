@@ -38,7 +38,7 @@ public class DoUpdateMoviePutController {
 	 * @return Película actualizada o mensajes de error si la validación falla o no se encuentra la película.
 	 */
 	@PutMapping
-	public ResponseEntity<?> updateMovie(@PathVariable Integer id, @Valid @RequestBody Movie updatedMovie, BindingResult bindingResult) {
+	public ResponseEntity<?> execute(@PathVariable Integer id, @Valid @RequestBody Movie updatedMovie, BindingResult bindingResult) {
 		
 		if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult.getFieldErrors()

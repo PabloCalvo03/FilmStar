@@ -36,7 +36,7 @@ public class DoAddMovieToFavoritePostController {
      * @return ResponseEntity con el mensaje y HttpStatus correspondientes
      */
     @PostMapping
-    public ResponseEntity<?> addFavorite(
+    public ResponseEntity<?> execute(
             @PathVariable Integer movieId,
             @AuthenticationPrincipal User user) {
 		try {

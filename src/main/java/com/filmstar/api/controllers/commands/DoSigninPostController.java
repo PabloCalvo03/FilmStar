@@ -29,7 +29,7 @@ public class DoSigninPostController {
      * @return Respuesta con token JWT y detalles del usuario autenticado.
      */
     @PostMapping
-    public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SigninRequest request) {
+    public ResponseEntity<JwtAuthenticationResponse> execute(@RequestBody SigninRequest request) {
         return ResponseEntity.ok(authenticationService.signin(request));
     }
 	
