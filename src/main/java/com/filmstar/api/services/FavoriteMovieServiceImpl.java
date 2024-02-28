@@ -1,9 +1,10 @@
 package com.filmstar.api.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.filmstar.api.entities.FavoriteMovie;
@@ -17,8 +18,8 @@ public class FavoriteMovieServiceImpl implements FavoriteMovieService {
     @Autowired
     private FavoriteMovieRepository favoriteMovieRepository;
 
-    public List<FavoriteMovie> getFavoritesByUser(User user) {
-        return favoriteMovieRepository.findByUser(user);
+    public Page<FavoriteMovie> getFavoritesByUser(User user, Pageable pageable) {
+        return favoriteMovieRepository.findByUser(user, pageable);
     }
 
     public void addFavoriteMovie(User user, Movie movie) {
@@ -40,4 +41,6 @@ public class FavoriteMovieServiceImpl implements FavoriteMovieService {
     public boolean isMovieInFavorites(User user, Movie movie) {
         return favoriteMovieRepository.findByUserAndMovie(user, movie).isPresent();
     }
+
+	
 }

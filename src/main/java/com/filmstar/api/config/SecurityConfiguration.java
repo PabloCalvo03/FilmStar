@@ -1,7 +1,5 @@
 package com.filmstar.api.config;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
 
+import com.filmstar.api.config.jwt.JwtAuthenticationEntryPoint;
 import com.filmstar.api.config.jwt.JwtAuthenticationFilter;
 import com.filmstar.api.entities.Role;
 import com.filmstar.api.services.UserService;
@@ -38,6 +37,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     	http
         .csrf(AbstractHttpConfigurer::disable)
+        .exceptionHandling().authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+        .and()
         .authorizeHttpRequests(request -> request
             .antMatchers("/api/v1/auth/**").permitAll()
             .antMatchers(HttpMethod.GET, "/api/v1/favorites/**").hasAuthority(Role.ROLE_USER.toString()) 
@@ -81,4 +82,5 @@ public class SecurityConfiguration {
             throws Exception {
         return config.getAuthenticationManager();
     }
+
 }

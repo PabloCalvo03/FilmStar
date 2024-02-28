@@ -1,7 +1,5 @@
 package com.filmstar.api.dtos.responses;
 
-import com.filmstar.api.entities.User;
-
 public class UserResponse {
 	
  	private String firstName;

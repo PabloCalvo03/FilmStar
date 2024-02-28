@@ -1,10 +1,9 @@
 package com.filmstar.api.services;
 
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +25,12 @@ public class MovieServiceImpl implements MovieService{
 	private RatingRepository ratingRepository;
 
 	@Override
-	public List<Movie> findAll(Pageable pageable) {
-		return movieRepository.findAll(pageable).getContent();
+	public Page<Movie> findAll(Pageable pageable) {
+		return movieRepository.findAll(pageable);
 	}
 
 	@Override
-	public Movie findById(Integer id) throws NoSuchElementException{
+	public Movie findById(Integer id){
 		Optional<Movie> optionalMovie = movieRepository.findById(id);
 	    return optionalMovie.orElseThrow(() -> new MovieNotFoundException("Movie not found with id: " + id));
 	}
@@ -43,6 +42,7 @@ public class MovieServiceImpl implements MovieService{
 
 	@Override
 	public void deleteById(Integer id) {
+		this.findById(id);
 		movieRepository.deleteById(id);
 	}
 	

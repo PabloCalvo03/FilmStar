@@ -18,8 +18,9 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtServiceImpl implements JwtService {
+	
 	@Value("${jwt.secret}")
-    private String jwtSigningKey;// = "413F4428472B4B6250655368566D5970337336763979244226452948404D6351";
+    private String jwtSigningKey;
 
     @Override
     public String extractUserName(String token) {
@@ -67,6 +68,7 @@ public class JwtServiceImpl implements JwtService {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
 
     private Key getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSigningKey);

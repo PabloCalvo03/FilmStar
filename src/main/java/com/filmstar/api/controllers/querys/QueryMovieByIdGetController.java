@@ -1,6 +1,5 @@
 package com.filmstar.api.controllers.querys;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,35 +7,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.filmstar.api.entities.Movie;
-import com.filmstar.api.exceptions.MovieNotFoundException;
-import com.filmstar.api.services.MovieService;
+import com.filmstar.api.usecases.MovieByIdUseCase;
 
 /**
- * Controlador obtener pelicula por id.
+ * Controlador para manejar las consultas de películas por su identificador a través de solicitudes GET.
+ * Las solicitudes se gestionan mediante endpoints RESTful.
  */
 @RestController
 @RequestMapping("/api/v1/movies/{id}")
 public class QueryMovieByIdGetController {
-	
-private final MovieService movieService;
-	
-	public QueryMovieByIdGetController(MovieService movieService) {
-		this.movieService = movieService;
-	}
-	
-	/**
-     * Obtiene una película por su ID.
+    
+    private final MovieByIdUseCase movieByIdUseCase;
+    
+    /**
+     * Constructor que inyecta una instancia de MovieByIdUseCase.
      *
-     * @param id ID de la película.
-     * @return Película encontrada o mensaje de error si no se encuentra.
+     * @param movieByIdUseCase Caso de uso para obtener información de una película por su identificador.
      */
-	@GetMapping
-	public ResponseEntity<?> execute(@PathVariable Integer id){
-		try {
-			return new ResponseEntity<Movie>(movieService.findById(id), HttpStatus.ACCEPTED);
-		} catch(MovieNotFoundException e) {
-			throw e;
-		}
-	}
+    public QueryMovieByIdGetController(MovieByIdUseCase movieByIdUseCase) {
+        this.movieByIdUseCase = movieByIdUseCase;
+    }
 
+    /**
+     * Maneja las solicitudes GET para obtener información de una película por su identificador.
+     *
+     * @param id Identificador de la película que se va a consultar.
+     * @return ResponseEntity con información de la película solicitada.
+     */
+    @GetMapping
+    public ResponseEntity<Movie> execute(@PathVariable Integer id) {
+        ResponseEntity<Movie> response = movieByIdUseCase.execute(id);
+        return response;
+    }
 }

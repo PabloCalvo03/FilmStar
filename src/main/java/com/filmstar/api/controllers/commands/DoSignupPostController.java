@@ -6,32 +6,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.filmstar.api.dtos.requests.SignUpRequest;
+import com.filmstar.api.dtos.requests.SignupRequest;
 import com.filmstar.api.dtos.responses.JwtAuthenticationResponse;
-import com.filmstar.api.services.AuthenticationService;
+import com.filmstar.api.usecases.SignupUseCase;
 
 /**
- * Controlador para el registro de los usuarios.
+ * Controlador para manejar las solicitudes de registro a través de solicitudes POST.
+ * Las solicitudes se gestionan mediante endpoints RESTful.
  */
 @RestController
 @RequestMapping("/api/v1/auth/signup")
 public class DoSignupPostController {
-	
-	private final AuthenticationService authenticationService;
-	
-	public DoSignupPostController(AuthenticationService authenticationService) {
-		this.authenticationService = authenticationService;		
-	}
-
+    
+    private final SignupUseCase signupUseCase;
+    
     /**
-     * Maneja la solicitud de registro de un nuevo usuario.
+     * Constructor que inyecta una instancia de SignupUseCase.
      *
-     * @param request Datos de registro del nuevo usuario.
-     * @return Respuesta con token JWT y detalles del usuario recién registrado.
+     * @param signupUseCase Caso de uso para el registro de usuarios.
      */
-    @PostMapping
-    public ResponseEntity<JwtAuthenticationResponse> execute(@RequestBody SignUpRequest request) {
-        return ResponseEntity.ok(authenticationService.signup(request));
+    public DoSignupPostController(SignupUseCase signupUseCase) {
+        this.signupUseCase = signupUseCase;        
     }
 
+    /**
+     * Maneja las solicitudes POST para el registro de usuarios.
+     *
+     * @param signupRequest Objeto que contiene la solicitud de registro.
+     * @return ResponseEntity con información sobre el resultado de la operación de registro.
+     */
+    @PostMapping
+    public ResponseEntity<JwtAuthenticationResponse> execute(@RequestBody SignupRequest signupRequest) {
+        ResponseEntity<JwtAuthenticationResponse> response = signupUseCase.execute(signupRequest);
+        return response;
+    }
 }

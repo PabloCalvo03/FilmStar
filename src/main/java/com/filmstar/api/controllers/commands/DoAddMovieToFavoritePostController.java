@@ -2,7 +2,6 @@ package com.filmstar.api.controllers.commands;
 
 import java.util.Map;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,44 +9,39 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.filmstar.api.entities.Movie;
 import com.filmstar.api.entities.User;
-import com.filmstar.api.exceptions.MovieNotFoundException;
-import com.filmstar.api.services.FavoriteMovieService;
-import com.filmstar.api.services.MovieService;
+import com.filmstar.api.usecases.AddMovieToFavoriteUseCase;
 
+/**
+ * Controlador para manejar la adición de películas a la lista de favoritos de un usuario.
+ * Las solicitudes se gestionan a través de endpoints RESTful.
+ */
 @RestController
 @RequestMapping("/api/v1/favorites/{movieId}")
 public class DoAddMovieToFavoritePostController {
-	
-	private final FavoriteMovieService favoriteMovieService;
-    private final MovieService movieService;
 
-    public DoAddMovieToFavoritePostController(MovieService movieService, FavoriteMovieService favoriteMovieService) {
-    	this.movieService = movieService;
-		this.favoriteMovieService = favoriteMovieService;
-	}
+    private final AddMovieToFavoriteUseCase addMovieToFavoriteUseCase;
 
     /**
-     * Añade una película a la lista de favoritos para un usuario.
+     * Constructor que inyecta una instancia de AddMovieToFavoriteUseCase.
      *
-     * @param movieId ID de la película a añadir
-     * @param user Usuario autenticado
-     * @return ResponseEntity con el mensaje y HttpStatus correspondientes
+     * @param addMovieToFavoriteUseCase Caso de uso para agregar películas a la lista de favoritos.
+     */
+    public DoAddMovieToFavoritePostController(AddMovieToFavoriteUseCase addMovieToFavoriteUseCase) {
+        this.addMovieToFavoriteUseCase = addMovieToFavoriteUseCase;
+    }
+
+    /**
+     * Maneja las solicitudes POST para agregar una película a la lista de favoritos del usuario.
+     *
+     * @param movieId Identificador de la película que se va a agregar.
+     * @param user    Usuario autenticado que realiza la solicitud.
+     * @return ResponseEntity con un mapa que contiene información sobre el resultado de la operación.
      */
     @PostMapping
-    public ResponseEntity<?> execute(
-            @PathVariable Integer movieId,
-            @AuthenticationPrincipal User user) {
-		try {
-	    	Movie movie = movieService.findById(movieId);
-	    	if(favoriteMovieService.isMovieInFavorites(user, movie)) {
-		        return new ResponseEntity<Map<String, String>>(Map.of("message", "La pelicula ya esta en favoritos."), HttpStatus.CREATED);
-	        }
-	        favoriteMovieService.addFavoriteMovie(user, movie);
-	        return new ResponseEntity<Map<String, String>>(Map.of("message", "Pelicula añadida a favoritos."), HttpStatus.CREATED);
-		} catch(MovieNotFoundException e) {
-			throw e;
-		}
+    public ResponseEntity<Map<String, String>> execute(@PathVariable Integer movieId,
+                                                       @AuthenticationPrincipal User user) {
+        ResponseEntity<Map<String, String>> response = addMovieToFavoriteUseCase.execute(movieId, user);
+        return response;
     }
 }

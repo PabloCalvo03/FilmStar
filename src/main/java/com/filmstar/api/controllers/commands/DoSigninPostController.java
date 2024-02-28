@@ -8,29 +8,36 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.filmstar.api.dtos.requests.SigninRequest;
 import com.filmstar.api.dtos.responses.JwtAuthenticationResponse;
-import com.filmstar.api.services.AuthenticationService;
+import com.filmstar.api.usecases.SigninUseCase;
+
 /**
- * Controlador para el inicio de sesion de los usuarios.
+ * Controlador para manejar las solicitudes de inicio de sesión a través de solicitudes POST.
+ * Las solicitudes se gestionan mediante endpoints RESTful.
  */
 @RestController
 @RequestMapping("/api/v1/auth/signin")
 public class DoSigninPostController {
-	
-	private final AuthenticationService authenticationService;
-		
-	public DoSigninPostController(AuthenticationService authenticationService) {
-		this.authenticationService = authenticationService;		
-	}
-
-	/**
-     * Maneja la solicitud de inicio de sesión de un usuario existente.
+    
+    private final SigninUseCase signinUseCase;
+    
+    /**
+     * Constructor que inyecta una instancia de SigninUseCase.
      *
-     * @param request Datos de inicio de sesión del usuario.
-     * @return Respuesta con token JWT y detalles del usuario autenticado.
+     * @param signinUseCase Caso de uso para el inicio de sesión.
+     */
+    public DoSigninPostController(SigninUseCase signinUseCase) {
+        this.signinUseCase = signinUseCase;        
+    }
+
+    /**
+     * Maneja las solicitudes POST para iniciar sesión.
+     *
+     * @param signinRequest Objeto que contiene la solicitud de inicio de sesión.
+     * @return ResponseEntity con información sobre el resultado de la operación de inicio de sesión.
      */
     @PostMapping
-    public ResponseEntity<JwtAuthenticationResponse> execute(@RequestBody SigninRequest request) {
-        return ResponseEntity.ok(authenticationService.signin(request));
+    public ResponseEntity<JwtAuthenticationResponse> execute(@RequestBody SigninRequest signinRequest) {
+        ResponseEntity<JwtAuthenticationResponse> response = signinUseCase.execute(signinRequest);
+        return response;
     }
-	
 }

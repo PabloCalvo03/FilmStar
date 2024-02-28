@@ -1,52 +1,46 @@
 package com.filmstar.api.controllers.commands;
 
-import java.util.Map;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import org.springframework.web.bind.annotation.RequestBody;import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.filmstar.api.dtos.requests.MovieRatingRequest;
-import com.filmstar.api.dtos.responses.MovieRatingResponse;
-import com.filmstar.api.entities.Rating;
 import com.filmstar.api.entities.User;
-import com.filmstar.api.exceptions.MovieNotFoundException;
-import com.filmstar.api.services.MovieService;
+import com.filmstar.api.usecases.RateMovieUseCase;
 
+/**
+ * Controlador para manejar la calificación de películas a través de solicitudes POST.
+ * Las solicitudes se gestionan mediante endpoints RESTful.
+ */
 @RestController
 @RequestMapping("/api/v1/movies/rate")
 public class DoRateMoviePostController {
-	private final MovieService movieService;
-	
-	public DoRateMoviePostController(MovieService movieService) {
-		this.movieService = movieService;
-	}
+    
+    private final RateMovieUseCase rateMovieUseCase;
+    
+    /**
+     * Constructor que inyecta una instancia de RateMovieUseCase.
+     *
+     * @param rateMovieUseCase Caso de uso para la calificación de películas.
+     */
+    public DoRateMoviePostController(RateMovieUseCase rateMovieUseCase) {
+        this.rateMovieUseCase = rateMovieUseCase;
+    }
 
-	
-	/**
-	 * Realiza una calificación para una película.
-	 *
-	 * @param requestBody Contiene la información necesaria para realizar la calificación, como el id de la película y la puntuación.
-	 * @param user        Usuario autenticado que realiza la calificación.
-	 * @return Calificación creada o mensaje de error si no se encuentra la película o el usuario no está autenticado.
-	 */
-	@PostMapping
-	public ResponseEntity<?> execute(
-	        @RequestBody MovieRatingRequest requestBody,
-	        @AuthenticationPrincipal User user) {
-
-	        if (user == null) {
-	            return new ResponseEntity<>(Map.of("error", "Usuario no autenticado."), HttpStatus.UNAUTHORIZED);
-	        }
-
-	        Rating rating = movieService.rateMovie(requestBody.getId(), requestBody.getScore(), user);
-	        MovieRatingResponse ratingResponse = new MovieRatingResponse(rating);
-	        return new ResponseEntity<>(ratingResponse, HttpStatus.CREATED);
-
-	}
+    /**
+     * Maneja las solicitudes POST para calificar una película.
+     *
+     * @param requestBody Objeto que contiene la solicitud de calificación de la película.
+     * @param user         Usuario autenticado que realiza la calificación.
+     * @return ResponseEntity con información sobre el resultado de la operación de calificación.
+     */
+    @PostMapping
+    public ResponseEntity<?> execute(@RequestBody MovieRatingRequest requestBody,
+                                     @AuthenticationPrincipal User user) {
+        ResponseEntity<?> response = rateMovieUseCase.execute(requestBody, user);
+        return response;
+    }
 }
