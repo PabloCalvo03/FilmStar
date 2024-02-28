@@ -16,7 +16,7 @@ public class MovieByIdUseCase {
 		this.movieService = movieService;
 	}
 	
-	public ResponseEntity<Movie> execute(Integer id){
+	public ResponseEntity<Movie> execute(Long id){
 		return new ResponseEntity<Movie>(movieService.findById(id), HttpStatus.ACCEPTED);
 	}
 

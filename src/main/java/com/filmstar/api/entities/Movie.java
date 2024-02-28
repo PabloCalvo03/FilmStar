@@ -17,7 +17,7 @@ public class Movie {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @NotBlank(message = "El título no puede estar en blanco")
     @Size(max = 255, message = "El título debe tener como máximo 255 caracteres")
@@ -46,11 +46,11 @@ public class Movie {
         this.overview = overview;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

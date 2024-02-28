@@ -24,7 +24,7 @@ public class DeleteFavoriteMovieUseCase {
 		this.favoriteMovieService = favoriteMovieService;
 	}
 
-    public ResponseEntity<Map<String, String>> execute(Integer movieId, User user) {
+    public ResponseEntity<Map<String, String>> execute(Long movieId, User user) {
     	Movie movie = movieService.findById(movieId);
         Optional<FavoriteMovie> favoriteMovie = favoriteMovieService.removeFavoriteMovie(user, movie);
         

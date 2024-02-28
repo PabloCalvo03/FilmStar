@@ -1,8 +1,11 @@
-DELETE FROM favorites;
-DELETE FROM ratings;
-DELETE FROM user_rol;
+/*Borro las tablas y los datos que hubiesen previamente*/
 DELETE FROM users;
+DELETE FROM ratings;
+DELETE FROM favorites;
+DELETE FROM movies;
 
+
+/*Inserto los datos en las tablas creadas*/
 INSERT INTO movies (title, original_title, poster_path, release_date, overview) VALUES 
     ('Aquaman and the Lost Kingdom', 'Aquaman and the Lost Kingdom', 'https://image.tmdb.org/t/p/w500/7lTnXOy0iNtBAdRP3TZvaKJ77F6.jpg', '2023-12-20', 'Black Manta, still driven by the need to avenge his father''s death and wielding the power of the mythic Black Trident, will stop at nothing to take Aquaman down once and for all. To defeat him.'),
     ('Wonka', 'Wonka', 'https://image.tmdb.org/t/p/w500/qhb1qOilapbapxWQn9jtRCMwXJF.jpg', '2023-12-06', 'Willy Wonka – chock-full of ideas and determined to change the world one delectable bite at a time – is proof that the best things in life begin with a dream, and if you’re lucky enough to meet Willy Wonka, anything is possible.'),
@@ -27,3 +30,23 @@ INSERT INTO movies (title, original_title, poster_path, release_date, overview) 
     ('The Sea Beast', 'The Sea Beast', 'https://image.tmdb.org/t/p/w500/bNrEPbEPrSODiXebjzm2g14lbU.jpg', '2023-12-02', 'The film tells the untold story of young King Neptune. When an unexpected treacherous event gives him the power of the sea, he must learn to control his new powers with the help of a mythical trident.'),
     ('Jurassic World: Dominion', 'Jurassic World: Dominion', 'https://image.tmdb.org/t/p/w500/lyJyX3qLpU2VsDVoc7VV6dC9LwV.jpg', '2022-06-09', 'The saga of the dinosaur park is reimagined in a new story set 65 million years ago, in the age of dinosaurs. With the clock ticking toward the extinction-level asteroid impact, a team of scientists will stop at nothing to ensure the survival of the dinosaurs on Earth.'),
     ('Legacy of Lies 2', 'Legacy of Lies 2', 'https://image.tmdb.org/t/p/w500/mEr4ZZWSsRrC1d3LrfZf6z3KBYV.jpg', '2023-12-31', 'An ex-MI6 agent is thrown back into the world of espionage and high stakes to uncover the shocking truth about operations conducted by unknown secret services.');
+    
+INSERT INTO users (firstname, lastname, email, password) VALUES 
+    ('Alice', 'Johnson', 'alice.johnson@example.com', '$2a$10$pnl.yPeMffoDM8IUpQs/keeSHyilTFaOsAdgCaP6me0Yhx5LmcTri'), -- password: password123
+    ('Bob', 'Smith', 'bob.smith@example.com', '$2a$10$fZEwmWm.W/6fpnjHS3pKy.TwxeQF/.2SPTgpu/HsaHkscxILzbOLG'); -- password: password456
+
+INSERT INTO favorites (user_id, movie_id) VALUES 
+    (1, 1),
+    (1, 2),
+    (2, 3),
+    (2, 4);
+
+INSERT INTO ratings (user_id, movie_id, score) VALUES 
+    (1, 1, 5),
+    (1, 2, 4),
+    (2, 3, 3),
+    (2, 4, 5);
+    
+INSERT INTO user_rol (user_id, roles_user) VALUES 
+    (1, 'ROLE_USER'),
+    (2, 'ROLE_ADMIN');

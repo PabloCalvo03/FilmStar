@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="favorites")
@@ -16,12 +17,14 @@ public class FavoriteMovie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+	@NotNull(message = "El usuario no puede ser nulo")
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
+	@NotNull(message = "La película no puede ser nula")
     @ManyToOne
-    @JoinColumn(name = "movie_id", nullable = false)
+    @JoinColumn(name = "movie_id")
     private Movie movie;
     
     public FavoriteMovie() {

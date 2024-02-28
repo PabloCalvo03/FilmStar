@@ -17,7 +17,7 @@ public class DeleteMovieUseCase {
 		this.movieService = movieService;
 	}
 	
-	public ResponseEntity<Map<String, String>> execute(Integer id){
+	public ResponseEntity<Map<String, String>> execute(Long id){
         movieService.deleteById(id);
         return new ResponseEntity<Map<String, String>>(Map.of("message", "Movie deleted."), HttpStatus.ACCEPTED);
 	}

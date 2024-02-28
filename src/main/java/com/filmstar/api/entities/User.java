@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,22 +30,24 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String firstname;
 
     private String lastname;
 
+    @NotBlank(message = "El correo electrónico no puede ser nulo")
     @Column(unique = true)
     private String email;
 
+    @NotBlank(message = "La contraseña no puede ser nula")
     private String password;
 
     public User() {
 
     }
 
-	public User(Integer id, String firstname, String lastname, String email, String password, Set<Role> roles) {
+	public User(Long id, String firstname, String lastname, String email, String password, Set<Role> roles) {
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -95,11 +98,11 @@ public class User implements UserDetails {
     }
 
     // Getters and Setters (manuales)
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -148,7 +151,7 @@ public class User implements UserDetails {
     }
     
     public static class UserBuilder {
-        private Integer id;
+        private Long id;
         private String firstname;
         private String lastname;
         private String email;
@@ -158,7 +161,7 @@ public class User implements UserDetails {
         private UserBuilder() {
         }
 
-        public UserBuilder id(Integer id) {
+        public UserBuilder id(Long id) {
             this.id = id;
             return this;
         }

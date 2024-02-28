@@ -6,6 +6,10 @@ public class PaginatedResponse<T> {
     private Integer pages;
     private Integer currentPage;
     private T content;
+    
+    public PaginatedResponse() {
+    	
+    }
 
     public PaginatedResponse(Long size, Integer pages, Integer currentPage, T content) {
         this.size = size;

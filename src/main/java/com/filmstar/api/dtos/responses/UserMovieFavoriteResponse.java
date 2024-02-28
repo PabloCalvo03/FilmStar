@@ -4,7 +4,7 @@ import com.filmstar.api.entities.User;
 
 public class UserMovieFavoriteResponse {
 
-    private Integer id;
+    private Long id;
     private String firstname;
     private String email;
 
@@ -16,12 +16,12 @@ public class UserMovieFavoriteResponse {
     }
 
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

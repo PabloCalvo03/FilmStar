@@ -1,13 +1,13 @@
 package com.filmstar.api.dtos.requests;
 
 public class MovieRatingRequest {
-    private Integer id;
+    private Long id;
     private int score;
     
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public int getScore() {

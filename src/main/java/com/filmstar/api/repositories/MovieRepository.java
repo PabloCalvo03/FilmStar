@@ -12,6 +12,6 @@ import com.filmstar.api.entities.Movie;
  *
  */
 @Repository
-public interface MovieRepository extends PagingAndSortingRepository<Movie, Integer>, CrudRepository<Movie, Integer>{
+public interface MovieRepository extends PagingAndSortingRepository<Movie, Long>, CrudRepository<Movie, Long>{
 	
 }

@@ -36,8 +36,8 @@ public class DoDeleteMovieDeleteController {
      * @return ResponseEntity con un mapa que contiene información sobre el resultado de la operación.
      */
     @DeleteMapping
-    public ResponseEntity<Map<String, String>> execute(@PathVariable Integer id) {
-        ResponseEntity<Map<String, String>> result = this.deleteMovieUseCase.execute(id);
-        return result;
+    public ResponseEntity<Map<String, String>> execute(@PathVariable Long id) {
+        ResponseEntity<Map<String, String>> response = this.deleteMovieUseCase.execute(id);
+        return response;
     }
 }

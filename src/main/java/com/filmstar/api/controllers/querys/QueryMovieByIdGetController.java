@@ -35,7 +35,7 @@ public class QueryMovieByIdGetController {
      * @return ResponseEntity con información de la película solicitada.
      */
     @GetMapping
-    public ResponseEntity<Movie> execute(@PathVariable Integer id) {
+    public ResponseEntity<Movie> execute(@PathVariable Long id) {
         ResponseEntity<Movie> response = movieByIdUseCase.execute(id);
         return response;
     }

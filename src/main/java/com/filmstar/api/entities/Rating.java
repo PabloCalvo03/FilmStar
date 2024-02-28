@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "ratings")
@@ -17,19 +18,32 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "La película no puede ser nula")
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
 
+    @NotNull(message = "El usuario no puede ser nulo")
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "score", nullable = false)
-    private int score;
+    @NotNull(message = "La puntuación no puede ser nula")
+    @Column(name = "score")
+    private Integer score;
+    
+    public Rating() {
+    	
+    }
+    
+    public Rating(Long id, Movie movie, User user, Integer score) {
+		this.id = id;
+		this.movie = movie;
+		this.user = user;
+		this.score = score;
+	}
 
-
-    public Long getId() {
+	public Long getId() {
         return id;
     }
 
@@ -53,11 +67,11 @@ public class Rating {
         this.user = user;
     }
 
-    public int getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 }

@@ -30,7 +30,7 @@ public class MovieServiceImpl implements MovieService{
 	}
 
 	@Override
-	public Movie findById(Integer id){
+	public Movie findById(Long id){
 		Optional<Movie> optionalMovie = movieRepository.findById(id);
 	    return optionalMovie.orElseThrow(() -> new MovieNotFoundException("Movie not found with id: " + id));
 	}
@@ -41,13 +41,13 @@ public class MovieServiceImpl implements MovieService{
 	}
 
 	@Override
-	public void deleteById(Integer id) {
+	public void deleteById(Long id) {
 		this.findById(id);
 		movieRepository.deleteById(id);
 	}
 	
 	@Override
-    public Rating rateMovie(Integer movieId, int score, User user) {
+    public Rating rateMovie(Long movieId, int score, User user) {
         Movie movie = findById(movieId);
 
         Rating rating = new Rating();

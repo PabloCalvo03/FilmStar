@@ -9,7 +9,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import io.jsonwebtoken.MalformedJwtException;
 
-@RestControllerAdvice
+/*@RestControllerAdvice
 public class GlobalExceptionHandler {
     
 	@ExceptionHandler(IllegalArgumentException.class)
@@ -56,4 +56,4 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
-}
+}*/

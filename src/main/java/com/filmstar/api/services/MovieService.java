@@ -10,9 +10,9 @@ import com.filmstar.api.entities.User;
 public interface MovieService {
 
 	Page<Movie> findAll(Pageable pageable);
-	Movie findById(Integer id);
+	Movie findById(Long id);
 	Movie save(Movie movie);
-	void deleteById(Integer id);
-	Rating rateMovie(Integer movieId, int score, User user);
+	void deleteById(Long id);
+	Rating rateMovie(Long movieId, int score, User user);
 	
 }

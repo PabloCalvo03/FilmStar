@@ -18,7 +18,7 @@ public class UpdateMovieUseCase {
 		this.movieService = movieService;
 	}
 
-	public ResponseEntity<?> execute(Integer id, Movie updatedMovie, BindingResult bindingResult) {
+	public ResponseEntity<?> execute(Long id, Movie updatedMovie, BindingResult bindingResult) {
 		
 		if (bindingResult.hasErrors()) {
 			return new ResponseEntity<>(EntityValidator.execute(bindingResult), HttpStatus.BAD_REQUEST);

@@ -3,6 +3,7 @@ package com.filmstar.api.actions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -31,31 +32,31 @@ public class AddToFavoritesTests {
 	
 	@Test
     void testExecute_AddToFavorite_Success() {
-        Integer movieId = 1;
-        User user = new User(); // Assuming User class exists
+        Long movieId = 23L;
+        User user = new User();
 
-        when(addMovieToFavoriteUseCase.execute(anyInt(), any(User.class)))
-                .thenReturn(new ResponseEntity<>(Map.of("message", "Movie with id: 1 added to favorites"), HttpStatus.CREATED));
+        when(addMovieToFavoriteUseCase.execute(anyLong(), any(User.class)))
+                .thenReturn(new ResponseEntity<>(Map.of("message", "Movie with id: " + movieId + " added to favorites"), HttpStatus.CREATED));
 
         ResponseEntity<Map<String, String>> response = addMovieToFavoritesController.execute(movieId, user);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals("Movie with id: 1 added to favorites", response.getBody().get("message"));
+        assertEquals("Movie with id: " + movieId + " added to favorites", response.getBody().get("message"));
         verify(addMovieToFavoriteUseCase, times(1)).execute(movieId, user);
     }
 
     @Test
     void testExecute_MovieAlreadyInFavorites_Accepted() {
-        Integer movieId = 1;
-        User user = new User(); // Assuming User class exists
+        Long movieId = 42L;
+        User user = new User();
 
-        when(addMovieToFavoriteUseCase.execute(anyInt(), any(User.class)))
-                .thenReturn(new ResponseEntity<>(Map.of("message", "Movie with id: 1 was already in favorites"), HttpStatus.ACCEPTED));
+        when(addMovieToFavoriteUseCase.execute(anyLong(), any(User.class)))
+                .thenReturn(new ResponseEntity<>(Map.of("message", "Movie with id: " + movieId + " was already in favorites"), HttpStatus.ACCEPTED));
 
         ResponseEntity<Map<String, String>> response = addMovieToFavoritesController.execute(movieId, user);
 
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-        assertEquals("Movie with id: 1 was already in favorites", response.getBody().get("message"));
+        assertEquals("Movie with id: " + movieId + " was already in favorites", response.getBody().get("message"));
         verify(addMovieToFavoriteUseCase, times(1)).execute(movieId, user);
     }
 

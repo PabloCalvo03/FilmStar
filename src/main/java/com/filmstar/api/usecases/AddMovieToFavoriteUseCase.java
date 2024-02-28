@@ -22,7 +22,7 @@ public class AddMovieToFavoriteUseCase {
 		this.favoriteMovieService = favoriteMovieService;
 	}
 
-    public ResponseEntity<Map<String, String>> execute(Integer movieId, User user) {
+    public ResponseEntity<Map<String, String>> execute(Long movieId, User user) {
     	Movie movie = movieService.findById(movieId);
     	if(favoriteMovieService.isMovieInFavorites(user, movie)) {
 	        return new ResponseEntity<Map<String, String>>(Map.of("message", "Movie with id: " + movie.getId() + " was already in favorites"), HttpStatus.ACCEPTED);
