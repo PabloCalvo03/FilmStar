@@ -21,7 +21,7 @@ public class ListMovieUseCase {
 	
 	public ResponseEntity<MovieListPaginatedResponse> execute(Pageable pageable){
 		Page<Movie> movies = movieService.findAll(pageable);
-		MovieListPaginatedResponse response = new MovieListPaginatedResponse(movies.getTotalElements(), movies.getTotalPages(), movies.getNumber(), movies.stream().toList());
+		MovieListPaginatedResponse response = new MovieListPaginatedResponse(movies.getTotalElements(), movies.getTotalPages(), movies.getNumber(), movies.getContent());
 		return new ResponseEntity<MovieListPaginatedResponse>(response, HttpStatus.ACCEPTED);
 	}
 }

@@ -1,9 +1,57 @@
-/*Borro las tablas y los datos que hubiesen previamente*/
-DELETE FROM users;
-DELETE FROM ratings;
-DELETE FROM favorites;
-DELETE FROM movies;
+-- Desactivar restricciones de clave externa
+SET FOREIGN_KEY_CHECKS = 0;
 
+-- Eliminar tablas
+DROP TABLE IF EXISTS user_rol;
+DROP TABLE IF EXISTS movies;
+DROP TABLE IF EXISTS ratings;
+DROP TABLE IF EXISTS favorites;
+DROP TABLE IF EXISTS users;
+
+-- Activar restricciones de clave externa
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- Crear tablas
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    firstname VARCHAR(255) NOT NULL,
+    lastname VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS movies (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    original_title VARCHAR(255) NOT NULL,
+    poster_path VARCHAR(255),
+    release_date DATE,
+    overview TEXT
+);
+
+CREATE TABLE IF NOT EXISTS favorites (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    movie_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (movie_id) REFERENCES movies(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS ratings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    movie_id INT,
+    score INT,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (movie_id) REFERENCES movies(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS user_rol (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    roles_user VARCHAR(255),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
 
 /*Inserto los datos en las tablas creadas*/
 INSERT INTO movies (title, original_title, poster_path, release_date, overview) VALUES 

@@ -1,5 +1,7 @@
 package com.filmstar.api.usecases;
 
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -23,7 +25,7 @@ public class ListFavoriteMoviesUseCase {
 	
 	public ResponseEntity<FavoriteMovieListPaginatedResponse> execute(User user, Pageable pageable){
 		Page<FavoriteMovie> favoriteMovies = favoriteMovieService.getFavoritesByUser(user, pageable);
-		FavoriteMovieListPaginatedResponse response = new FavoriteMovieListPaginatedResponse(favoriteMovies.getTotalElements(), favoriteMovies.getTotalPages(), favoriteMovies.getNumber(), favoriteMovies.stream().map(item -> new MovieFavoriteResponse(item)).toList());
+		FavoriteMovieListPaginatedResponse response = new FavoriteMovieListPaginatedResponse(favoriteMovies.getTotalElements(), favoriteMovies.getTotalPages(), favoriteMovies.getNumber(), favoriteMovies.stream().map(item -> new MovieFavoriteResponse(item)).collect(Collectors.toList()));
 		return new ResponseEntity<FavoriteMovieListPaginatedResponse>(response, HttpStatus.ACCEPTED);
 	}
 

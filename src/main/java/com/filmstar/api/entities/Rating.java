@@ -1,6 +1,5 @@
 package com.filmstar.api.entities;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,8 +18,8 @@ public class Rating {
     private Long id;
 
     @NotNull(message = "La película no puede ser nula")
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "movie_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
     private Movie movie;
 
     @NotNull(message = "El usuario no puede ser nulo")
