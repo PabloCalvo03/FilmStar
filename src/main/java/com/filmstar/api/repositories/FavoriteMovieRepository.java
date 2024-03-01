@@ -18,8 +18,6 @@ import com.filmstar.api.entities.User;
  */
 @Repository
 public interface FavoriteMovieRepository extends JpaRepository<FavoriteMovie, Long> {
-
     Page<FavoriteMovie> findByUser(User user, Pageable pageable);
-
     Optional<FavoriteMovie> findByUserAndMovie(User user, Movie movie);
 }

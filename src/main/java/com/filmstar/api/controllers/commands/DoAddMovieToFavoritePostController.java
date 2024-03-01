@@ -39,8 +39,7 @@ public class DoAddMovieToFavoritePostController {
      * @return ResponseEntity con un mapa que contiene información sobre el resultado de la operación.
      */
     @PostMapping
-    public ResponseEntity<Map<String, String>> execute(@PathVariable Long movieId,
-                                                       @AuthenticationPrincipal User user) {
+    public ResponseEntity<Map<String, String>> execute(@PathVariable Long movieId, @AuthenticationPrincipal User user) {
         ResponseEntity<Map<String, String>> response = addMovieToFavoriteUseCase.execute(movieId, user);
         return response;
     }

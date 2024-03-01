@@ -38,8 +38,7 @@ public class DoRateMoviePostController {
      * @return ResponseEntity con información sobre el resultado de la operación de calificación.
      */
     @PostMapping
-    public ResponseEntity<?> execute(@RequestBody MovieRatingRequest requestBody,
-                                     @AuthenticationPrincipal User user) {
+    public ResponseEntity<?> execute(@RequestBody MovieRatingRequest requestBody, @AuthenticationPrincipal User user) {
         ResponseEntity<?> response = rateMovieUseCase.execute(requestBody, user);
         return response;
     }

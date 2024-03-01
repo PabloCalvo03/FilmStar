@@ -39,8 +39,7 @@ public class DoDeleteFavoriteMovieDeleteController {
      * @return ResponseEntity con un mapa que contiene información sobre el resultado de la operación.
      */
     @DeleteMapping
-    public ResponseEntity<Map<String, String>> execute(@PathVariable Long movieId, 
-                                                       @AuthenticationPrincipal User user) {
+    public ResponseEntity<Map<String, String>> execute(@PathVariable Long movieId, @AuthenticationPrincipal User user) {
         ResponseEntity<Map<String, String>> response = deleteFavoriteMovieUseCase.execute(movieId, user);
         return response;
     }

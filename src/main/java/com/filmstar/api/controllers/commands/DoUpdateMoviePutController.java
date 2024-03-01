@@ -41,9 +41,7 @@ public class DoUpdateMoviePutController {
      * @return ResponseEntity con información sobre el resultado de la operación de actualización.
      */
     @PutMapping
-    public ResponseEntity<?> execute(@PathVariable Long id, 
-                                     @Valid @RequestBody Movie updatedMovie,
-                                     BindingResult bindingResult) {
+    public ResponseEntity<?> execute(@PathVariable Long id, @Valid @RequestBody Movie updatedMovie, BindingResult bindingResult) {
         ResponseEntity<?> response = updateMovieUseCase.execute(id, updatedMovie, bindingResult);
         return response;
     }

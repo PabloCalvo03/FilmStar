@@ -26,7 +26,7 @@ public class ListFavoriteMoviesUseCase {
 	public ResponseEntity<FavoriteMovieListPaginatedResponse> execute(User user, Pageable pageable){
 		Page<FavoriteMovie> favoriteMovies = favoriteMovieService.getFavoritesByUser(user, pageable);
 		FavoriteMovieListPaginatedResponse response = new FavoriteMovieListPaginatedResponse(favoriteMovies.getTotalElements(), favoriteMovies.getTotalPages(), favoriteMovies.getNumber(), favoriteMovies.stream().map(item -> new MovieFavoriteResponse(item)).collect(Collectors.toList()));
-		return new ResponseEntity<FavoriteMovieListPaginatedResponse>(response, HttpStatus.ACCEPTED);
+		return new ResponseEntity<FavoriteMovieListPaginatedResponse>(response, HttpStatus.OK);
 	}
 
 }

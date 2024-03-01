@@ -17,7 +17,7 @@ public class MovieByIdUseCase {
 	}
 	
 	public ResponseEntity<Movie> execute(Long id){
-		return new ResponseEntity<Movie>(movieService.findById(id), HttpStatus.ACCEPTED);
+		return new ResponseEntity<Movie>(movieService.findById(id), HttpStatus.OK);
 	}
 
 }
