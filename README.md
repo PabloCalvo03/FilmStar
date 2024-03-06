@@ -8,7 +8,7 @@ Bienvenido a FilsmTar , el componente que facilita la integración de funcionali
 
 - **Calificaciones y Reseñas:** Accede a las calificaciones y reseñas proporcionadas por la comunidad de usuarios. Esto te permite obtener una perspectiva más completa antes de ver una película.
 
-- **Búsqueda Avanzada:** Utiliza la funcionalidad de búsqueda para encontrar películas según diferentes criterios, como género, año de lanzamiento o popularidad.
+- **Búsqueda paginada:** Utiliza la funcionalidad de búsqueda para encontrar películas paginadas y ordenadas como desees.
 
 ## Uso
 
